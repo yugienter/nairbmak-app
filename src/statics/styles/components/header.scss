@@ -1,0 +1,25 @@
+.site-header {
+  background-image: linear-gradient(to right, $c-primary, $c-secondary);
+  width: 100%;
+  height: 55px;
+  line-height: 55px;
+  padding: 0px 15px;
+}
+
+.site-header .logo {
+  height: 40px;
+  width: 40px;
+  float: left;
+}
+
+.site-header .logo img {
+  height: auto;
+  width: 100%;
+  vertical-align: middle;
+}
+
+.site-header .router {
+  height: 55px;
+  line-height: 55px;
+  text-align: center;
+}

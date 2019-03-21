@@ -1,0 +1,24 @@
+.my-btn {
+  width: 100%;
+  height: 30px;
+  margin: 20px 0px 0px 0px;
+  color: $c-white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.my-btn.large {
+  height: 50px;
+}
+
+.my-btn.primary {
+  background: $c-primary;
+}
+
+.my-btn.secondary {
+  background: $c-yellow;
+}
+
+.my-btn.cancel {
+  background: $c-red;
+}

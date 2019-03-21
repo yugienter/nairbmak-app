@@ -1,0 +1,82 @@
+body {
+  font-family: $font-family-base;
+  font-weight: 500;
+}
+
+.thin {
+  font-weight: 300;
+}
+
+.regular {
+  font-weight: 500;
+}
+
+.bold {
+  font-weight: 700;
+  font-style: normal;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.underline {
+  text-decoration: underline !important;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+a {
+  color: $c-black;
+  font-size: 14px;
+}
+a:hover,
+a:focus {
+  color: $c-black;
+  text-decoration: none;
+}
+a.lengthy {
+  word-break: break-all;
+}
+
+p {
+  color: $c-black;
+  font-size: 14px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 40px 0px 0px 0px;
+  font-weight: 700;
+  color: $c-black;
+  font-size: 18px;
+}
+
+::-webkit-input-placeholder {
+  /* Edge */
+  color: $c-gray;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: $c-gray;
+}
+
+::placeholder {
+  color: $c-gray;
+}
+
+* {
+  min-height: 0; /* Rendering problems using flexbox in Firefox and Chrome 48 */
+  min-width: 0; /* Rendering problems using flexbox in Firefox and Chrome 48 */
+  outline: 0 none !important;
+}
