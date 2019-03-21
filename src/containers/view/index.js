@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import ComponentOne from './componentOne';
+import ComponentOne from '../report/componentOne';
 import ComponentTwo from './componentTwo';
-import ComponentThree from './componentThree';
-import ComponentFour from './componentFour';
+import ComponentThree from '../report/componentThree';
+import ComponentFour from '../report/componentFour';
 
 import { increase } from '../../modules/counter.reducer';
 

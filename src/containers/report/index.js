@@ -11,9 +11,20 @@ import { increase } from '../../modules/counter.reducer';
 
 
 class Report extends Component {
+  constructor() {
+    super();
+
+    this.data = {};
+    this.onData = this.onData.bind(this);
+  }
 
   componentDidMount() {
     this.props.increase();
+  }
+
+  onData(re) {
+    this.data = { ...this.data, ...re };
+    console.log(this.data);
   }
 
   render() {
@@ -24,22 +35,22 @@ class Report extends Component {
           <div className="row">
             <h1 className="col-12">I. THÔNG TIN VỀ PHẢN ỨNG CÓ HẠI (ADR)</h1>
           </div>
-          <ComponentOne />
+          <ComponentOne onData={this.onData} />
 
           <div className="row">
             <h1 className="col-12">II. THÔNG TIN VỀ THUỐC NGHI NGỜ GÂY ADR</h1>
           </div>
-          <ComponentTwo />
+          <ComponentTwo onData={this.onData} />
 
           <div className="row">
             <h1 className="col-12">III. PHẦN THẨM ĐỊNH ADR CỦA ĐƠN VỊ</h1>
           </div>
-          <ComponentThree />
+          <ComponentThree onData={this.onData} />
 
           <div className="row">
             <h1 className="col-12">IV. THÔNG TIN VỀ NGƯỜI / ĐƠN VỊ GỬI BÁO CÁO</h1>
           </div>
-          <ComponentFour />
+          <ComponentFour onData={this.onData} />
 
           <div className="row justify-content-end">
             <div className="col-2">

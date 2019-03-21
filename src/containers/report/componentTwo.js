@@ -9,9 +9,11 @@ class ComponentTwo extends Component {
   constructor() {
     super();
 
+    this.onDataOne = this.onDataOne.bind(this);
     this.openInputOne = this.openInputOne.bind(this);
     this.closeInputOne = this.closeInputOne.bind(this);
     this.saveInputOne = this.saveInputOne.bind(this);
+    this.removeInputOne = this.removeInputOne.bind(this);
     this.btnOne = {
       deactive: (
         <div className="row justify-content-end">
@@ -32,9 +34,11 @@ class ComponentTwo extends Component {
       )
     }
 
+    this.onDataTwo = this.onDataTwo.bind(this);
     this.openInputTwo = this.openInputTwo.bind(this);
     this.closeInputTwo = this.closeInputTwo.bind(this);
     this.saveInputTwo = this.saveInputTwo.bind(this);
+    this.removeInputTwo = this.removeInputTwo.bind(this);
     this.btnTwo = {
       deactive: (
         <div className="row justify-content-end">
@@ -55,53 +59,97 @@ class ComponentTwo extends Component {
       )
     }
 
-
     this.state = {
-      one: false,
+      visibleOne: false,
       btnOne: this.btnOne.deactive,
-      two: false,
+      tempDataOne: null,
+      dataOne: [],
+      visibleTwo: false,
       btnTwo: this.btnTwo.deactive,
+      tempDataTwo: null,
+      dataTwo: [],
     }
   }
 
-  openInputOne() {
-    this.setState({ one: true, btnOne: this.btnOne.active });
-  }
-  closeInputOne() {
-    this.setState({ one: false, btnOne: this.btnOne.deactive });
-  }
-  saveInputOne() {
-    this.setState({ one: false, btnOne: this.btnOne.deactive });
+  componentDidUpdate() {
+    this.props.onData({
+      ThongTinVeThuocNghiNgoGayADR: {
+        ThuocNghiNgoGayPhanUng: this.state.dataOne,
+        CacThuocDongThoi: this.state.dataTwo
+      }
+    });
   }
 
+  onDataOne(data) {
+    this.setState({ tempDataOne: data });
+  }
+  openInputOne() {
+    this.setState({ visibleOne: true, btnOne: this.btnOne.active });
+  }
+  closeInputOne() {
+    this.setState({ tempDataOne: null, visibleOne: false, btnOne: this.btnOne.deactive });
+  }
+  saveInputOne() {
+    let newData = this.state.dataOne;
+    newData.push(this.state.tempDataOne);
+    this.setState({ dataOne: newData }, () => {
+      this.closeInputOne();
+    });
+  }
+  removeInputOne(i) {
+    let newData = this.state.dataOne;
+    newData.splice(i, 1);
+    this.setState({ dataOne: newData });
+  }
+
+  onDataTwo(data) {
+    this.setState({ tempDataTwo: data });
+  }
   openInputTwo() {
-    this.setState({ two: true, btnTwo: this.btnTwo.active });
+    this.setState({ visibleTwo: true, btnTwo: this.btnTwo.active });
   }
   closeInputTwo() {
-    this.setState({ two: false, btnTwo: this.btnTwo.deactive });
+    this.setState({ tempDataTwo: null, visibleTwo: false, btnTwo: this.btnTwo.deactive });
   }
   saveInputTwo() {
-    this.setState({ two: false, btnTwo: this.btnTwo.deactive });
+    var newData = this.state.dataTwo;
+    newData.push(this.state.tempDataTwo);
+    this.setState({ dataTwo: newData }, () => {
+      this.closeInputTwo();
+    });
+  }
+  removeInputTwo(i) {
+    let newData = this.state.dataTwo;
+    newData.splice(i, 1);
+    this.setState({ dataTwo: newData });
   }
 
   render() {
     return (
       <div className="row">
         <Table
+          viewOnly={false}
           title={<p>9. Thuốc nghi ngờ gây phản ứng</p>}
           size='12'
-          headers={['Thuốc nghi ngờ', 'Dạng bào chế/hàm lượng', 'Liều dùng', 'Đường dùng', 'Ngày bắt đầu', 'Ngày kết thúc', 'Lý do dùng thuốc']}
+          headers={['Thuốc nghi ngờ', 'Dạng bào chế', 'Hàm lượng', 'Liều dùng', 'Đường dùng', 'Ngày bắt đầu', 'Ngày kết thúc', 'Lý do dùng thuốc']}
+          keys={['ThuocNghiNgo', 'DangBaoChe', 'HamLuongThuoc', 'LieuDungMotLan', 'DuongDung', 'NgayBatDau', 'NgayKetThuc', 'LyDoDungThuoc']}
           btn={this.state.btnOne}
+          remove={this.removeInputOne}
+          data={this.state.dataOne}
         />
-        <InputOne visible={this.state.one} />
+        {this.state.visibleOne ? <InputOne onData={this.onDataOne} /> : null}
 
         <Table
-          title={<p>12. Các thuốc dùng đồng thời (Ngoại trừ các thuốc dùng điều trị/ khắc phục hậu quả của ADR)</p>}
+          viewOnly={false}
+          title={<p>10. Các thuốc dùng đồng thời (Ngoại trừ các thuốc dùng điều trị/ khắc phục hậu quả của ADR)</p>}
           size='12'
-          headers={['Thuốc đồng thời', 'Dạng bào chế/hàm lượng', 'Liều dùng', 'Đường dùng', 'Ngày bắt đầu', 'Ngày kết thúc', 'Lý do dùng thuốc']}
+          headers={['Thuốc dùng đồng thời', 'Dạng bào chế', 'Hàm lượng', 'Liều dùng', 'Đường dùng', 'Ngày bắt đầu', 'Ngày kết thúc', 'Lý do dùng thuốc']}
+          keys={['ThuocDungDongThoi', 'DangBaoChe', 'HamLuongThuoc', 'LieuDungMotLan', 'DuongDung', 'NgayBatDau', 'NgayKetThuc', 'LyDoDungThuoc']}
           btn={this.state.btnTwo}
+          remove={this.removeInputTwo}
+          data={this.state.dataTwo}
         />
-        <InputTwo visible={this.state.two} />
+        {this.state.visibleTwo ? <InputTwo onData={this.onDataTwo} /> : null}
       </div>
     );
   }

@@ -3,8 +3,23 @@ import Textarea from 'react-textarea-autosize';
 
 
 class BoxText extends Component {
-  
-  select(data) {
+  constructor() {
+    super();
+
+    this.select = this.select.bind(this);
+    this.onChange = this.onChange.bind(this);
+  }
+
+  onChange(e) {
+    var re = {};
+    re[this.props.name] = {};
+    re[this.props.name] = this.text.value;
+    if (this.option) re[this.props.name] = re[this.props.name] + ' ' + this.option.value;
+    this.props.onChange(re);
+  }
+
+  select() {
+    let data = this.props.options;
     if (!data || data.length <= 0) return null;
 
     var re = [];
@@ -12,11 +27,13 @@ class BoxText extends Component {
       re.push(<option value={data[i]} key={i}>{data[i]}</option>)
     }
 
-    return (<div className="col">
-      <select name="option">
-        {re}
-      </select>
-    </div>)
+    return (
+      <div className="col">
+        <select onChange={this.onChange} name="option" ref={node => { this.option = node }} >
+          {re}
+        </select>
+      </div>
+    )
   }
 
   render() {
@@ -30,9 +47,9 @@ class BoxText extends Component {
           </div>
           <div className="row">
             <div className="col">
-              <Textarea placeholder={this.props.hint} />
+              <Textarea onChange={this.onChange} placeholder={this.props.hint} inputRef={node => { this.text = node }} />
             </div>
-            {this.select(this.props.options)}
+            {this.select()}
           </div>
         </div>
       </div>
