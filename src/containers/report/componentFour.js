@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import CheckboxText from '../core/checkboxText';
 import BoxText from '../core/boxText';
 
+const NAME = 'ThongTinVeNguoiDonViGuiBaoCao';
+
 
 class ComponentFour extends Component {
   constructor() {
@@ -24,9 +26,9 @@ class ComponentFour extends Component {
   }
 
   componentDidUpdate() {
-    this.props.onData({
-      ThongTinVeNguoiDonViGuiBaoCao: this.state.data
-    });
+    let data = {};
+    data[NAME] = this.state.data;
+    this.props.onData(data);
   }
 
   onChange(value) {

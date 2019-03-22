@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@kambria/kambria-wallet": "^2.1.2",
+    "axios": "^0.18.0",
     "history": "^4.7.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",

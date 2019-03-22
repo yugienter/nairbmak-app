@@ -4,6 +4,10 @@ import Table from '../core/table';
 import InputOne from './componentTwo.inputOne';
 import InputTwo from './componentTwo.inputTwo';
 
+const NAME = 'ThongTinVeThuocNghiNgoGayADR';
+const NAME_ONE = 'ThuocNghiNgoGayPhanUng';
+const NAME_TWO = 'CacThuocDongThoi';
+
 
 class ComponentTwo extends Component {
   constructor() {
@@ -72,12 +76,11 @@ class ComponentTwo extends Component {
   }
 
   componentDidUpdate() {
-    this.props.onData({
-      ThongTinVeThuocNghiNgoGayADR: {
-        ThuocNghiNgoGayPhanUng: this.state.dataOne,
-        CacThuocDongThoi: this.state.dataTwo
-      }
-    });
+    let data = {};
+    data[NAME] = {};
+    data[NAME][NAME_ONE] = this.state.dataOne;
+    data[NAME][NAME_TWO] = this.state.dataTwo;
+    this.props.onData(data);
   }
 
   onDataOne(data) {

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Wallet from '@kambria/kambria-wallet';
 import config from 'configs';
+import Util from 'helpers/util.lib';
 
 import { fetchWorkInfo } from '../../modules/work.reducer';
 import { fetchStakeInfo } from '../../modules/stake.reducer';
@@ -47,7 +48,7 @@ class Status extends Component {
     return <div className="status-bar success">
       <p>
         <span className="bold">Network: </span>
-        <span className="italic">{config.eth.NETWORK} </span>
+        <span className="italic">{Util.code2Name(this.props.work.NETWORK)} </span>
         <span>- </span>
         <span className="bold">Address: </span>
         <a className="underline">{this.props.work.ACCOUNT} </a>
@@ -66,7 +67,7 @@ class Status extends Component {
     return <div className="status-bar error">
       <p>
         <span className="bold">Network: </span>
-        <span className="italic">{config.eth.NETWORK} </span>
+        <span className="italic">{Util.code2Name(config.eth.NETWORK)} </span>
         <span>- </span>
         <a onClick={this.register} className="bold underline">Click here to access full features!</a>
       </p>

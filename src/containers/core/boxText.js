@@ -37,6 +37,8 @@ class BoxText extends Component {
   }
 
   render() {
+    if (this.props.data) var data = this.props.data[this.props.name];
+
     return (
       <div className={"col-" + this.props.size}>
         <div className={this.props.pop ? this.props.pop : "box"}>
@@ -47,7 +49,10 @@ class BoxText extends Component {
           </div>
           <div className="row">
             <div className="col">
-              <Textarea onChange={this.onChange} placeholder={this.props.hint} inputRef={node => { this.text = node }} />
+              {
+                data ? <Textarea value={data} /> :
+                  <Textarea onChange={this.onChange} placeholder={this.props.hint} inputRef={node => { this.text = node }} />
+              }
             </div>
             {this.select()}
           </div>

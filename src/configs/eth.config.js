@@ -7,7 +7,7 @@ var config = {};
  * Development configurations
  */
 config.development = {
-  NETWORK: 'Rinkeby',
+  NETWORK: 4,
   WORK: {
     ADDRESS: '0x5a5d01e417efbe9484b0c97fd080cbf50146afe6',
     DECIMALS: 18
@@ -24,7 +24,7 @@ config.development = {
  * Production configurations
  */
 config.production = {
-  NETWORK: 'Rinkeby',
+  NETWORK: 4,
   WORK: {
     ADDRESS: '0x5a5d01e417efbe9484b0c97fd080cbf50146afe6',
     DECIMALS: 18

@@ -7,7 +7,6 @@ var config = {};
  * Development configurations
  */
 config.development = {
-  PORT: 5000,
   API: {
     URL: 'http://localhost:3000',
     SET: '/report/set',
@@ -19,7 +18,6 @@ config.development = {
  * Production configurations
  */
 config.production = {
-  PORT: 5000,
   API: {
     URL: 'http://localhost:3000',
     SET: '/report/set',

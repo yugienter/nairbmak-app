@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import Table from '../core/table';
 
-import Table from '../core/table'
+const NAME = 'ThongTinVeThuocNghiNgoGayADR';
 
 
 class ComponentTwo extends Component {
