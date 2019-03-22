@@ -26,11 +26,11 @@ contract WORK is StandardToken {
     balances[msg.sender] = totalSupply_; // coinbase
   }
 
-  function name() public view returns (string) {
+  function name() public view returns (string memory) {
     return name_;
   }
 
-  function symbol() public view returns (string) {
+  function symbol() public view returns (string memory) {
     return symbol_;
   }
 

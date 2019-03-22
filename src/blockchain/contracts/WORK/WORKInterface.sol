@@ -1,8 +1,8 @@
 pragma solidity >=0.4.22 <0.6.0;
 
 interface WORKInterface {
-  function name() external view returns (string);
-  function symbol() external view returns (string);
+  function name() external view returns (string memory);
+  function symbol() external view returns (string memory);
   function decimals() external view returns (uint256);
   function balanceOf(address who) external view returns (uint256);
   function transfer(address to, uint256 value) external returns (bool);

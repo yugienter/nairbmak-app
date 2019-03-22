@@ -13,11 +13,11 @@ contract STAKE is StandardSTAKE {
     decimals_ = 18;
   }
 
-  function name() public view returns (string) {
+  function name() public view returns (string memory) {
     return name_;
   }
 
-  function symbol() public view returns (string) {
+  function symbol() public view returns (string memory) {
     return symbol_;
   }
 

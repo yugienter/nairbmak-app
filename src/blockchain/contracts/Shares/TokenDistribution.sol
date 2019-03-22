@@ -34,7 +34,7 @@ contract TokenDistribution {
     uint256 milestone = block.number.sub(block.number % duration);
     uint256 percentage = stakeToken.stakeOfAt(msg.sender, milestone).mul(100).div(stakeToken.totalSupplyAt(milestone));
     records[msg.sender] = milestone;
-    uint256 value = percentage.mul(workToken.balanceOf(this)).div(100);
+    uint256 value = percentage.mul(workToken.balanceOf(address(this))).div(100);
     bool ok = workToken.transfer(msg.sender, value);
     emit Share(msg.sender, value, ok);
     return ok;

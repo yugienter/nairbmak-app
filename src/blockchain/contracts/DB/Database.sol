@@ -48,7 +48,7 @@ contract Database is STAKE {
   }
 
   modifier validImportance(uint256 _importance) {
-    require(_completeness >= 0 && _completeness <= 40, "Invalid importance score");
+    require(_importance >= 0 && _importance <= 40, "Invalid importance score");
     _;
   }
 
