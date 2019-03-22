@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 
-import counter from './counter.reducer';
+import work from './work.reducer';
+import stake from './stake.reducer';
 
 export default combineReducers({
-  counter
+  work,
+  stake
 });

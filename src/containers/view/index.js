@@ -7,14 +7,10 @@ import ComponentTwo from './componentTwo';
 import ComponentThree from '../report/componentThree';
 import ComponentFour from '../report/componentFour';
 
-import { increase } from '../../modules/counter.reducer';
-
 
 class View extends Component {
 
   componentDidMount() {
-    this.props.increase();
-
     this.show = this.show.bind(this);
   }
 
@@ -101,11 +97,10 @@ class View extends Component {
 
 const mapStateToProps = state => ({
   routing: state.routing,
-  counter: state.counter
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  increase: () => increase(1)
+
 }, dispatch);
 
 export default connect(

@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { increase } from '../../modules/counter.reducer';
-
 
 class Explorer extends Component {
 
   componentDidMount() {
-    this.props.increase();
 
   }
 
@@ -111,12 +108,11 @@ class Explorer extends Component {
 }
 
 const mapStateToProps = state => ({
-  routing: state.routing,
-  counter: state.counter
+  routing: state.routing
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  increase: () => increase(1)
+
 }, dispatch);
 
 export default connect(

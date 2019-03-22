@@ -1,5 +1,3 @@
-var tokenABI = require('./data/tokenABI.json');
-
 /**
  * Contructor
  */
@@ -9,51 +7,34 @@ var config = {};
  * Development configurations
  */
 config.development = {
-  BLOCKCHAIN_PROVIDER: 'http://172.31.28.106:8545',
-  KATT: {
-    ADDRESS: '0x9dddff7752e1714c99edf940ae834f0d57d68546',
-    ABI: tokenABI,
+  NETWORK: 'Rinkeby',
+  WORK: {
+    ADDRESS: '0x5a5d01e417efbe9484b0c97fd080cbf50146afe6',
     DECIMALS: 18
   },
-  // BLOCKCHAIN_PROVIDER: 'http://localhost:8545',
-  // KATT: {
-  //   ADDRESS: '0xa1dcd70c009de7dbf64f0bdd903c7c990287931d',
-  //   ABI: tokenABI,
-  //   DECIMALS: 18
-  // },
-  EVENTS: {
-    TRANSFER: 'Transfer'
-  }
-};
-
-/**
- * Staging configurations
- */
-config.staging = {
-  BLOCKCHAIN_PROVIDER: 'http://172.31.28.106:8545',
-  KATT: {
-    ADDRESS: '0x9dddff7752e1714c99edf940ae834f0d57d68546',
-    ABI: tokenABI,
-    DECIMALS: 18
+  DATABASE: {
+    ADDRESS: '0xa0a4505b4f2b5955799c8e57ba780964953ba4c6'
   },
-  EVENTS: {
-    TRANSFER: 'Transfer'
-  }
+  DISTRIBUTION: {
+    ADDRESS: '0x1407404667dd0f77849ac76cbf9c16cc59a101cc'
+  },
 };
 
 /**
  * Production configurations
  */
 config.production = {
-  BLOCKCHAIN_PROVIDER: 'http://172.31.28.106:8545',
-  KATT: {
-    ADDRESS: '0x9dddff7752e1714c99edf940ae834f0d57d68546',
-    ABI: tokenABI,
+  NETWORK: 'Rinkeby',
+  WORK: {
+    ADDRESS: '0x5a5d01e417efbe9484b0c97fd080cbf50146afe6',
     DECIMALS: 18
   },
-  EVENTS: {
-    TRANSFER: 'Transfer'
-  }
+  DATABASE: {
+    ADDRESS: '0xa0a4505b4f2b5955799c8e57ba780964953ba4c6'
+  },
+  DISTRIBUTION: {
+    ADDRESS: '0x1407404667dd0f77849ac76cbf9c16cc59a101cc'
+  },
 };
 
 /**

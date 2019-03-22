@@ -7,8 +7,6 @@ import ComponentTwo from './componentTwo';
 import ComponentThree from './componentThree';
 import ComponentFour from './componentFour';
 
-import { increase } from '../../modules/counter.reducer';
-
 
 class Report extends Component {
   constructor() {
@@ -18,13 +16,9 @@ class Report extends Component {
     this.onData = this.onData.bind(this);
   }
 
-  componentDidMount() {
-    this.props.increase();
-  }
-
   onData(re) {
     this.data = { ...this.data, ...re };
-    console.log(this.data);
+    // console.log(this.data);
   }
 
   render() {
@@ -54,7 +48,7 @@ class Report extends Component {
 
           <div className="row">
             <div className="col-8">
-              <p className="error-msg italic">Error message should be here!</p>
+              <p className="error-msg italic">Error message should be here</p>
             </div>
             <div className="col-2">
               <button className="my-btn cancel large">Huỷ bỏ</button>
@@ -70,12 +64,11 @@ class Report extends Component {
 }
 
 const mapStateToProps = state => ({
-  routing: state.routing,
-  counter: state.counter
+  routing: state.routing
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  increase: () => increase(1)
+
 }, dispatch);
 
 export default connect(

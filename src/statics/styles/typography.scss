@@ -40,6 +40,7 @@ a:hover,
 a:focus {
   color: $c-black;
   text-decoration: none;
+  cursor: pointer;
 }
 a.lengthy {
   word-break: break-all;
@@ -48,6 +49,11 @@ a.lengthy {
 p {
   color: $c-black;
   font-size: 14px;
+}
+
+span:hover,
+span:focus {
+  cursor: pointer;
 }
 
 h1,
