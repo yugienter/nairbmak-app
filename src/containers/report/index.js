@@ -52,7 +52,10 @@ class Report extends Component {
           </div>
           <ComponentFour onData={this.onData} />
 
-          <div className="row justify-content-end">
+          <div className="row">
+            <div className="col-8">
+              <p className="error-msg italic">Error message should be here!</p>
+            </div>
             <div className="col-2">
               <button className="my-btn cancel large">Huỷ bỏ</button>
             </div>

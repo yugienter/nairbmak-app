@@ -1,10 +1,15 @@
 {
   "name": "nairbmak-app",
   "version": "0.0.1",
+  "scripts": {
+    "start": "REACT_APP_ENV=development react-scripts start",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "css": "sass ./src/statics/styles/index.scss ./src/statics/styles/index.css --style compressed"
+  },
   "dependencies": {
-    "express": "^4.16.3",
+    "@kambria/kambria-wallet": "^2.1.2",
     "history": "^4.7.2",
-    "http": "0.0.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-redux": "^5.0.7",
@@ -14,18 +19,6 @@
     "react-textarea-autosize": "^7.1.0",
     "redux": "^4.0.0",
     "redux-thunk": "^2.2.0"
-  },
-  "scripts": {
-    "start": "REACT_APP_ENV=development react-scripts start",
-    "stag": "npm run build-stag && npm run deploy-stag",
-    "prod": "npm run build-prod && npm run deploy-prog",
-    "deploy-stag": "NODE_ENV=staging node express",
-    "deploy-prog": "NODE_ENV=production node express",
-    "build-stag": "REACT_APP_ENV=staging react-scripts build",
-    "build-prod": "REACT_APP_ENV=production react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "css": "sass ./src/statics/styles/index.scss ./src/statics/styles/index.css --style compressed"
   },
   "devDependencies": {
     "sass": "^1.17.3"

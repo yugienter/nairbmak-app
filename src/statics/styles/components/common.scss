@@ -21,3 +21,18 @@ body {
 .active {
   background-color: $c-tail;
 }
+
+.error-msg {
+  position: absolute;
+  margin: 0;
+  bottom: 0;
+  color: $c-red;
+  font-size: 14px;
+}
+
+.success-msg {
+  position: absolute;
+  margin: 0;
+  bottom: 0;
+  color: $c-green;
+}
