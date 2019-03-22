@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { setIPFS } from 'modules/ipfs.reducer';
+import { submitReport } from 'modules/database.reducer';
 
 import ComponentOne from './componentOne';
 import ComponentTwo from './componentTwo';
 import ComponentThree from './componentThree';
 import ComponentFour from './componentFour';
+import ComponentFive from './componentFive';
 
 
 class Report extends Component {
@@ -21,10 +23,12 @@ class Report extends Component {
     }
 
     this.data = {};
+    this.reviewers = [];
     this.reset = this.reset.bind(this);
     this.submit = this.submit.bind(this);
     this.message = this.message.bind(this);
     this.onData = this.onData.bind(this);
+    this.onReviewers = this.onReviewers.bind(this);
   }
 
   reset() {
@@ -56,6 +60,12 @@ class Report extends Component {
     this.data = { ...this.data, ...re };
   }
 
+  onReviewers(re) {
+    this.reviewers = re.ThongTinVeNguoiDonViDanhGia.DanhSachChuyenGiaDanhGia.split(',').map(function (item) {
+      return item.trim();
+    });
+  }
+
   render() {
     return (
       !this.state.reset ? null : // Tricky reset components
@@ -83,6 +93,11 @@ class Report extends Component {
             <ComponentFour onData={this.onData} />
 
             <div className="row">
+              <h1 className="col-12">V. THÔNG TIN VỀ NGƯỜI / ĐƠN VỊ ĐÁNH GIÁ</h1>
+            </div>
+            <ComponentFive onData={this.onReviewers} />
+
+            <div className="row">
               <div className="col-8">
                 {this.message()}
               </div>
@@ -101,11 +116,13 @@ class Report extends Component {
 
 const mapStateToProps = state => ({
   routing: state.routing,
-  ipfs: state.ipfs
+  ipfs: state.ipfs,
+  database: state.database
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setIPFS: (data) => setIPFS(data)
+  setIPFS: (data) => setIPFS(data),
+  submitReport: (hash, reviewers, references) => submitReport(hash, reviewers, references)
 }, dispatch);
 
 export default connect(

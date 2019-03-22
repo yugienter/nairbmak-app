@@ -4,10 +4,10 @@ import { bindActionCreators } from 'redux';
 
 import { getIPFS } from 'modules/ipfs.reducer';
 
-import ComponentOne from '../report/componentOne';
+import ComponentOne from './componentOne';
 import ComponentTwo from './componentTwo';
-import ComponentThree from '../report/componentThree';
-import ComponentFour from '../report/componentFour';
+import ComponentThree from './componentThree';
+import ComponentFour from './componentFour';
 
 
 class View extends Component {
@@ -36,7 +36,6 @@ class View extends Component {
 
   find() {
     this.props.getIPFS(this.state.hash).then(re => {
-      console.log(re)
       this.setState({ data: re, error: null });
     }).catch(er => {
       this.setState({ data: null, error: 'Cannot load document' });

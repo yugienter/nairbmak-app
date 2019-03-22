@@ -27,7 +27,6 @@ function _fetchInfo(callback) {
     let account = accounts[0];
     web3.version.getNetwork((er, network) => {
       STAKE.stakeOf(account).then(balance => {
-        console.log(balance)
         if (er) return callback(er, null);
         balance = balance / 10 ** 18;
         return callback(null, {

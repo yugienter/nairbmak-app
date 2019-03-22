@@ -1,5 +1,15 @@
 class Util {
 
+  static isIn(e, a) {
+    if (!e) return false;
+    if (!a || a.length <= 0) return false;
+
+    for (let i = 0; i < a.length; i++) {
+      if (e == a[i]) return true;
+    }
+    return false;
+  }
+  
   static code2Name(code) {
     if (!code) return null;
     code = code.toString();

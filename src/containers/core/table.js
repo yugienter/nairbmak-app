@@ -6,7 +6,7 @@ class Table extends Component {
     super(props);
 
     this.header = this.header.bind(this);
-    this.data = this.data.bind(this);
+    this.table = this.table.bind(this);
   }
 
   header() {
@@ -23,7 +23,7 @@ class Table extends Component {
     return (<tr>{re}</tr>)
   }
 
-  data() {
+  table() {
     let data = this.props.data;
     let keys = this.props.keys;
     if (!data || data.length <= 0) return null;
@@ -69,7 +69,7 @@ class Table extends Component {
               <table className="my-table">
                 <tbody>
                   {this.header()}
-                  {this.data()}
+                  {this.table()}
                 </tbody>
               </table>
             </div>
