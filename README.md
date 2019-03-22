@@ -1,4 +1,4 @@
-# Nairbmak App
+# NAIRBMAK APP
 
 ## How to start server?
 
