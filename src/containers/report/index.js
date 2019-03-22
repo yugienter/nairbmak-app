@@ -61,9 +61,8 @@ class Report extends Component {
   }
 
   onReviewers(re) {
-    this.reviewers = re.ThongTinVeNguoiDonViDanhGia.DanhSachChuyenGiaDanhGia.split(',').map(function (item) {
-      return item.trim();
-    });
+    this.data = { ...this.data, ...re };
+    this.reviewers = re.ThongTinVeNguoiDonViDanhGia.DanhSachChuyenGiaDanhGia;
   }
 
   render() {
@@ -122,7 +121,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   setIPFS: (data) => setIPFS(data),
-  submitReport: (hash, reviewers, references) => submitReport(hash, reviewers, references)
+  submitReport: (hash, reviewers) => submitReport(hash, reviewers)
 }, dispatch);
 
 export default connect(

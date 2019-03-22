@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity >=0.4.22 <0.6.0;
 
 import "./../helpers/SafeMath.sol";
 import "./../STAKE/STAKE.sol";
@@ -13,7 +13,6 @@ contract Database is STAKE {
     address owner;
     address[] reviewers;
     address[] reviewed;
-    bytes32[] references;
     bool isClosed;
   }
 
@@ -25,8 +24,8 @@ contract Database is STAKE {
   /**
    * Constructor
    */
-  constructor(address _boostrapNode, uint256 _boostrapValue) public {
-    mint(_boostrapNode, _boostrapValue);
+  constructor(address _bootstrapNode, uint256 _bootstrapValue) public {
+    mint(_bootstrapNode, _bootstrapValue);
   }
 
   /**
@@ -49,7 +48,7 @@ contract Database is STAKE {
   }
 
   modifier validImportance(uint256 _importance) {
-    require(_importance == 10 || _importance == 20 || _importance == 30 || _importance == 40, "Invalid importance score");
+    require(_completeness >= 0 && _completeness <= 40, "Invalid importance score");
     _;
   }
 
@@ -66,12 +65,15 @@ contract Database is STAKE {
   /**
    * Public functions
    */
-  function submitReport(bytes32 _hashRoot, address[] memory _reviewers, bytes32[] memory _references) public {
-    MedicalReport memory _mr = MedicalReport(_hashRoot, block.timestamp, 0, msg.sender, _reviewers, new address[](0), _references, false);
+  function submitReport(bytes32 _hashRoot, address[] memory _reviewers) public {
+    MedicalReport memory _mr = MedicalReport(_hashRoot, block.timestamp, 0, msg.sender, _reviewers, new address[](0), false);
     achievements[msg.sender].push(_mr);
     emit SubmitReport(msg.sender, achievements[msg.sender].length.sub(1), _hashRoot);
   }
 
+  /**
+   * Weight is calculated by mean
+   */
   function scoreReport(
     address _reporter,
     uint256 _index,
@@ -89,13 +91,19 @@ contract Database is STAKE {
     uint256 harmony = achievements[_reporter][_index].reviewed.length;
     uint256 point = stakeOf(msg.sender).mul(_completeness.add(_importance)).div(100);
     if(harmony > 1) {
-      achievements[_reporter][_index].weight = weight.mul(harmony.sub(1)).div(harmony).mul(point);
+      achievements[_reporter][_index].weight = weight.mul(harmony.sub(1)).add(point).div(harmony);
     } else {
       achievements[_reporter][_index].weight = point;
     }
     emit ScoreReport(msg.sender, _reporter, _index, _completeness, _importance);
   }
 
+  /*
+  * Reward is for reporter
+  * Incentive is for reviewers
+  * Reward is 10% of Weight
+  * Incentive is 25% of Reward
+  */
   function closeReport(uint256 _index)
     public
     onlyOwner(achievements[msg.sender][_index])
@@ -106,7 +114,7 @@ contract Database is STAKE {
     uint256 incentive = reward.div(4).div(achievements[msg.sender][_index].reviewed.length);
     mint(msg.sender, reward);
     for(uint256 i = 0; i < achievements[msg.sender][_index].reviewed.length; i++) {
-      mint(achievements[msg.sender][_index].reviewed[i], incentive);
+      mint(achievements[msg.sender][_index].reviewed[i], incentive.div(achievements[msg.sender][_index].reviewed.length));
     }
     emit CloseReport(msg.sender, _index, reward);
   }
@@ -120,11 +128,6 @@ contract Database is STAKE {
     MedicalReport memory _mr = achievements[_reporter][_index];
     bool isReviewed = indexOf(_mr.reviewers[_order], _mr.reviewed) != _mr.reviewed.length;
     return (_mr.reviewers[_order], isReviewed);
-  }
-
-  function getReportRefer(address _reporter, uint256 _index, uint256 _order) public view returns (bytes32) {
-    MedicalReport memory _mr = achievements[_reporter][_index];
-    return _mr.references[_order];
   }
 
   /**

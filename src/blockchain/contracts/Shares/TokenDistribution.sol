@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity >=0.4.22 <0.6.0;
 
 import "./../helpers/SafeMath.sol";
 import "./../WORK/WORKInterface.sol";
@@ -33,7 +33,6 @@ contract TokenDistribution {
   function share() public validHolder returns (bool) {
     uint256 milestone = block.number.sub(block.number % duration);
     uint256 percentage = stakeToken.stakeOfAt(msg.sender, milestone).mul(100).div(stakeToken.totalSupplyAt(milestone));
-    if(percentage < 1) return false;
     records[msg.sender] = milestone;
     uint256 value = percentage.mul(workToken.balanceOf(this)).div(100);
     bool ok = workToken.transfer(msg.sender, value);

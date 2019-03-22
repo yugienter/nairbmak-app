@@ -25,10 +25,13 @@ class ComponentFive extends Component {
   }
 
   onChange(value) {
+    let re = value.DanhSachChuyenGiaDanhGia.split(',').map(function (item) {
+      return item.trim();
+    });
     this.setState({
       data: {
         ...this.state.data,
-        ...value
+        DanhSachChuyenGiaDanhGia: re
       }
     });
   }

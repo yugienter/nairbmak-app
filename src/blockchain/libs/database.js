@@ -31,10 +31,10 @@ class Database {
    * Submit report
    * return txId
    */
-  submitReport(hashRoot, reviewers, references) {
+  submitReport(hashRoot, reviewers) {
     var self = this;
     return new Promise((resolve, reject) => {
-      self.DATABASE.INSTANCE.submitReport(hashRoot, reviewers, references, { from: self.web3.eth.coinbase }, (er, txId) => {
+      self.DATABASE.INSTANCE.submitReport(hashRoot, reviewers, { from: self.web3.eth.coinbase }, (er, txId) => {
         if (er) return reject(er);
         return resolve(txId);
       });
@@ -91,20 +91,6 @@ class Database {
     var self = this;
     return new Promise((resolve, reject) => {
       self.DATABASE.INSTANCE.getReportReviewer(reporter, index, order, (er, re) => {
-        if (er) return reject(er);
-        return resolve(re);
-      });
-    });
-  }
-
-  /**
-   * Get report references
-   * return result
-   */
-  getReportRefer(reporter, index, order) {
-    var self = this;
-    return new Promise((resolve, reject) => {
-      self.DATABASE.INSTANCE.getReportRefer(reporter, index, order, (er, re) => {
         if (er) return reject(er);
         return resolve(re);
       });
