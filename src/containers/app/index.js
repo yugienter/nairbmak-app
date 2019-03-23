@@ -17,6 +17,7 @@ class App extends Component {
           <Switch>
             <Redirect exact from="/" to="/report" />
             <Route exact path="/report" component={Report} />
+            <Route exact path="/view/:hash" component={View} />
             <Route exact path="/view" component={View} />
             <Route exact path="/explorer" component={Explorer} />
           </Switch>

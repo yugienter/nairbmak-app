@@ -26,11 +26,16 @@ class Report extends Component {
 
     this.data = {};
     this.reviewers = [];
+    this.linkReportToView = this.linkReportToView.bind(this);
     this.reset = this.reset.bind(this);
     this.submit = this.submit.bind(this);
     this.message = this.message.bind(this);
     this.onData = this.onData.bind(this);
     this.onReviewers = this.onReviewers.bind(this);
+  }
+
+  linkReportToView(hash) {
+    this.props.history.push('/view/' + hash);
   }
 
   reset() {
@@ -65,7 +70,7 @@ class Report extends Component {
     if (this.state.errorMsg) return <p className="error-msg italic">{this.state.errorMsg}</p>
     if (this.state.successMsg) return <p className="success-msg italic">
       Success!<br />
-      {this.state.successMsg}<br />
+      {!this.state.successMsg ? null : <a href="javascript:void(0)" onClick={() => { this.linkReportToView(this.state.successMsg) }}>Review the report: {this.state.successMsg}</a>}<br />
       {!this.state.txId ? null : <a href={Util.linkTxEtherscan(this.props.work.NETWORK, this.state.txId)} target="_blank" rel="noopener noreferrer">View on Etherscan: {this.state.txId}</a>}
     </p>
     return null;
@@ -129,7 +134,6 @@ class Report extends Component {
 }
 
 const mapStateToProps = state => ({
-  routing: state.routing,
   work: state.work,
   ipfs: state.ipfs,
   database: state.database

@@ -193,7 +193,6 @@ class Action extends Component {
 }
 
 const mapStateToProps = state => ({
-  routing: state.routing,
   database: state.database,
   work: state.work
 });

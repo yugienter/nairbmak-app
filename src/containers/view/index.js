@@ -25,10 +25,16 @@ class View extends Component {
 
     this.onChange = this.onChange.bind(this);
     this.find = this.find.bind(this);
+    this.show = this.show.bind(this);
+    this.error = this.error.bind(this);
   }
 
   componentDidMount() {
-    this.show = this.show.bind(this);
+    if (this.props.match.params && this.props.match.params.hash) {
+      this.setState({ hash: this.props.match.params.hash }, () => {
+        this.find();
+      });
+    }
   }
 
   onChange(e) {
@@ -123,7 +129,6 @@ class View extends Component {
 }
 
 const mapStateToProps = state => ({
-  routing: state.routing,
   ipfs: state.ipfs,
   database: state.database
 });

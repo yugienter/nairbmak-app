@@ -17,9 +17,14 @@ class Explorer extends Component {
       data: []
     }
 
+    this.linkReportToView = this.linkReportToView.bind(this);
     this.previous = this.previous.bind(this);
     this.next = this.next.bind(this);
     this._getExplorer = this._getExplorer.bind(this);
+  }
+
+  linkReportToView(hash) {
+    this.props.history.push('/view/' + hash);
   }
 
   previous() {
@@ -82,7 +87,7 @@ class Explorer extends Component {
               <a href={Util.linkAddressEtherscan(this.props.work.NETWORK, data[i][3])} target="_blank" rel="noopener noreferrer" className="lengthy">{data[i][3]}</a>
             </div>
             <div className="col-3">
-              <a href="#" className="lengthy">{data[i][5]}</a>
+              <a onClick={() => { this.linkReportToView(data[i][5]) }} className="lengthy">{data[i][5]}</a>
             </div>
             <div className="col-2">
               <p className="lengthy">{Number(data[i][2]) / 10 ** 18}</p>
@@ -98,6 +103,10 @@ class Explorer extends Component {
     }
 
     return re;
+  }
+
+  componentDidMount() {
+    this._getExplorer();
   }
 
   render() {
@@ -145,7 +154,6 @@ class Explorer extends Component {
 }
 
 const mapStateToProps = state => ({
-  routing: state.routing,
   work: state.work,
   database: state.database,
 });

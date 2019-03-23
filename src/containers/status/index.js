@@ -117,7 +117,6 @@ class Status extends Component {
 }
 
 const mapStateToProps = state => ({
-  routing: state.routing,
   work: state.work,
   stake: state.stake,
   distribution: state.distribution
