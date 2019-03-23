@@ -8,6 +8,9 @@ import Util from 'helpers/util.lib';
 
 import { fetchWorkInfo } from '../../modules/work.reducer';
 import { fetchStakeInfo } from '../../modules/stake.reducer';
+import { share } from '../../modules/distribution.reducer';
+
+var TIMER = null;
 
 class Status extends Component {
   constructor() {
@@ -16,6 +19,7 @@ class Status extends Component {
     new Clipboard('.copy');
 
     this.state = {
+      txId: null,
       register: false,
       web3: null
     }
@@ -25,6 +29,7 @@ class Status extends Component {
     this.reload = this.reload.bind(this);
     this.success = this.success.bind(this);
     this.error = this.error.bind(this);
+    this._share = this._share.bind(this);
   }
 
   register() {
@@ -47,22 +52,48 @@ class Status extends Component {
     this.props.fetchStakeInfo();
   }
 
+  _share() {
+    this.props.share().then(txId => {
+      this.setState({ txId: txId }, () => {
+        if (TIMER) {
+          clearTimeout(TIMER);
+          TIMER = null;
+        }
+        TIMER = setTimeout(() => {
+          this.setState({ txId: null })
+        }, 10000); // clear tx after 10s
+      });
+    }).catch(er => {
+      console.error(er);
+    })
+  }
+
   success() {
-    return <div className="status-bar success">
-      <p>
-        <span className="bold">Network: </span>
-        <span className="italic">{Util.code2Name(this.props.work.NETWORK)} </span>
-        <span>- </span>
-        <span className="bold">Address: </span>
-        <a className="underline copy" data-clipboard-text={this.props.work.ACCOUNT}>{this.props.work.ACCOUNT} </a>
-        <span>- </span>
-        <span className="bold">WORK: </span>
-        <span>{this.props.work.WORK} / </span>
-        <span className="bold">STAKE: </span>
-        <span>{this.props.stake.STAKE} / </span>
-        <a href="#" className="bold underline">Get my shares</a>
-        <span onClick={this.reload}> / <i className="fas fa-sync-alt"></i></span>
-      </p>
+    return <div>
+      <div className="status-bar success">
+        <p>
+          <span className="bold underline" onClick={this.reload}><i className="fas fa-sync-alt"></i> Reload</span>
+          <span> / </span>
+          <span className="bold">Network: </span>
+          <span className="italic">{Util.code2Name(this.props.work.NETWORK)} </span>
+          <span>- </span>
+          <span className="bold">Address: </span>
+          <a className="underline copy" data-clipboard-text={this.props.work.ACCOUNT}>{this.props.work.ACCOUNT} </a>
+          <span>- </span>
+          <span className="bold">WORK: </span>
+          <span>{this.props.work.WORK}</span>
+          <span> / </span>
+          <span className="bold">STAKE: </span>
+          <span>{this.props.stake.STAKE}</span>
+          <span> / </span>
+          <a onClick={this._share} className="bold underline">Get my shares</a>
+        </p>
+      </div>
+      {
+        !this.state.txId ? null : <div className="status-bar info">
+          <a href={Util.linkTxEtherscan(this.props.work.NETWORK, this.state.txId)} target="_blank" rel="noopener noreferrer">View on Etherscan: {this.state.txId}</a>
+        </div>
+      }
     </div>
   }
 
@@ -88,12 +119,14 @@ class Status extends Component {
 const mapStateToProps = state => ({
   routing: state.routing,
   work: state.work,
-  stake: state.stake
+  stake: state.stake,
+  distribution: state.distribution
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   fetchWorkInfo: () => fetchWorkInfo(),
-  fetchStakeInfo: () => fetchStakeInfo()
+  fetchStakeInfo: () => fetchStakeInfo(),
+  share: () => share(),
 }, dispatch);
 
 export default connect(

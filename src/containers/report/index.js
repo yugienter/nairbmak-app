@@ -66,7 +66,7 @@ class Report extends Component {
     if (this.state.successMsg) return <p className="success-msg italic">
       Success!<br />
       {this.state.successMsg}<br />
-      {!this.state.txId ? null : <a href={Util.linkTxEtherscan(this.props.work.NETWORK, this.state.txId)} target="_blank">View on Etherscan: {this.state.txId}</a>}
+      {!this.state.txId ? null : <a href={Util.linkTxEtherscan(this.props.work.NETWORK, this.state.txId)} target="_blank" rel="noopener noreferrer">View on Etherscan: {this.state.txId}</a>}
     </p>
     return null;
   }

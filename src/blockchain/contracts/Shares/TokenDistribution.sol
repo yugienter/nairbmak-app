@@ -9,7 +9,7 @@ contract TokenDistribution {
 
   WORKInterface workToken;
   STAKEInterface stakeToken;
-  uint256 duration = 162000;
+  uint256 duration = 20; // should be 162000
 
   mapping (address => uint256) records;
   event Share(address indexed holder, uint256 value, bool ok);

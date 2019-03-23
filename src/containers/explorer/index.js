@@ -23,14 +23,14 @@ class Explorer extends Component {
   }
 
   previous() {
-    if (this.state.page == 0) return;
+    if (this.state.page === 0) return;
     this.setState({ page: this.state.page - 1 }, () => {
       this._getExplorer();
     });
   }
 
   next() {
-    if (!this.state.data || this.state.data.length == 0) return;
+    if (!this.state.data || this.state.data.length === 0) return;
     this.setState({ page: this.state.page + 1 }, () => {
       this._getExplorer();
     });
@@ -73,13 +73,13 @@ class Explorer extends Component {
         <div className="box">
           <div className="row">
             <div className="col-1">
-              <a href={Util.linkBlockEtherscan(this.props.work.NETWORK, Number(data[i][0]))} target="_blank">{Number(data[i][0])}</a>
+              <a href={Util.linkBlockEtherscan(this.props.work.NETWORK, Number(data[i][0]))} target="_blank" rel="noopener noreferrer">{Number(data[i][0])}</a>
             </div>
             <div className="col-2">
               <p className="lengthy">{Date(Number(data[i][1]) * 1000)}</p>
             </div>
             <div className="col-3">
-              <a href={Util.linkAddressEtherscan(this.props.work.NETWORK, data[i][3])} target="_blank" className="lengthy">{data[i][3]}</a>
+              <a href={Util.linkAddressEtherscan(this.props.work.NETWORK, data[i][3])} target="_blank" rel="noopener noreferrer" className="lengthy">{data[i][3]}</a>
             </div>
             <div className="col-3">
               <a href="#" className="lengthy">{data[i][5]}</a>

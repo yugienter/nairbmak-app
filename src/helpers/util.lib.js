@@ -1,4 +1,3 @@
-import config from 'configs';
 var bs58 = require('bs58');
 
 class Util {
@@ -8,7 +7,7 @@ class Util {
     if (!a || a.length <= 0) return false;
 
     for (let i = 0; i < a.length; i++) {
-      if (e == a[i]) return true;
+      if (e === a[i]) return true;
     }
     return false;
   }

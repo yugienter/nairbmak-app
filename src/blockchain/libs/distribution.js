@@ -64,4 +64,4 @@ class Distribution {
   }
 }
 
-module.exports = Distribution;
+export default Distribution;
