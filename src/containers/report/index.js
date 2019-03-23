@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Util from 'helpers/util.lib';
 
 import { setIPFS } from 'modules/ipfs.reducer';
 import { submitReport } from 'modules/database.reducer';
@@ -19,6 +20,7 @@ class Report extends Component {
     this.state = {
       reset: true,
       successMsg: null,
+      txId: null,
       errorMsg: null
     }
 
@@ -39,9 +41,17 @@ class Report extends Component {
 
   submit() {
     this.props.setIPFS(this.data).then(re => {
-      this.setState({
-        successMsg: re.path,
-        errorMsg: null
+      this.props.submitReport(Util.decodeIPFSHash(re.hash), this.reviewers).then(txId => {
+        this.setState({
+          successMsg: re.hash,
+          txId: txId,
+          errorMsg: null
+        });
+      }).catch(er => {
+        this.setState({
+          successMsg: null,
+          errorMsg: 'Cannot submit document.'
+        });
       });
     }).catch(er => {
       this.setState({
@@ -53,7 +63,12 @@ class Report extends Component {
 
   message() {
     if (this.state.errorMsg) return <p className="error-msg italic">{this.state.errorMsg}</p>
-    return <p className="success-msg italic">{this.state.successMsg}</p>
+    if (this.state.successMsg) return <p className="success-msg italic">
+      Success!<br />
+      {this.state.successMsg}<br />
+      {!this.state.txId ? null : <a href={Util.linkTxEtherscan(this.props.work.NETWORK, this.state.txId)} target="_blank">View on Etherscan: {this.state.txId}</a>}
+    </p>
+    return null;
   }
 
   onData(re) {
@@ -115,6 +130,7 @@ class Report extends Component {
 
 const mapStateToProps = state => ({
   routing: state.routing,
+  work: state.work,
   ipfs: state.ipfs,
   database: state.database
 });

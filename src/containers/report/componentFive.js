@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import CheckboxText from '../core/checkboxText';
 import BoxText from '../core/boxText';
+import Util from 'helpers/util.lib';
 
 const NAME = 'ThongTinVeNguoiDonViDanhGia';
 
@@ -25,9 +25,7 @@ class ComponentFive extends Component {
   }
 
   onChange(value) {
-    let re = value.DanhSachChuyenGiaDanhGia.split(',').map(function (item) {
-      return item.trim();
-    });
+    let re = Util.string2Array(value.DanhSachChuyenGiaDanhGia);
     this.setState({
       data: {
         ...this.state.data,

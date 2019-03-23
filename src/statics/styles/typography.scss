@@ -32,6 +32,10 @@ body {
   text-transform: uppercase;
 }
 
+.lengthy {
+  word-break: break-all;
+}
+
 a {
   color: $c-black;
   font-size: 14px;
@@ -41,9 +45,6 @@ a:focus {
   color: $c-black;
   text-decoration: none;
   cursor: pointer;
-}
-a.lengthy {
-  word-break: break-all;
 }
 
 p {

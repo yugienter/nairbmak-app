@@ -57,11 +57,49 @@ export const fetchWorkInfo = () => {
   }
 }
 
+/**
+ * Transfer WORK
+ */
+export const TRANSFER_WORK = 'TRANSFER_WORK';
+export const TRANSFER_WORK_OK = 'TRANSFER_WORK_OK';
+export const TRANSFER_WORK_FAIL = 'TRANSFER_WORK_FAIL';
+
+function _transferWORK(to, amount, callback) {
+  let web3 = window.kambriaWallet.web3;
+  let WORK = new work(config.eth.WORK.ADDRESS, web3);
+  WORK.transfer(to, amount).then(txId => {
+    return callback(null, txId);
+  }).catch(er => {
+    if (er) return callback(er, null);
+  });
+}
+
+export const transferWORK = (to, amount) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: TRANSFER_WORK });
+      _transferWORK(to, amount, (er, re) => {
+        if (er) {
+          dispatch({ type: TRANSFER_WORK_OK, reason: er, data: null });
+          return reject(er);
+        }
+        dispatch({ type: TRANSFER_WORK_FAIL, reason: null, data: re });
+        return resolve(re);
+      });
+    });
+  }
+}
+
+
 export default (state = defaultState, action) => {
   switch (action.type) {
     case FETCH_WORK_OK:
       return { ...state, ...action.data };
     case FETCH_WORK_FAIL:
+      return { ...state, ...action.data };
+    case TRANSFER_WORK_OK:
+      return { ...state, ...action.data };
+    case TRANSFER_WORK_FAIL:
       return { ...state, ...action.data };
     default:
       return state;

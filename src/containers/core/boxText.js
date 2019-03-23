@@ -50,7 +50,7 @@ class BoxText extends Component {
           <div className="row">
             <div className="col">
               {
-                this.props.viewOnly ? <Textarea value={data} disabled/> :
+                this.props.viewOnly ? <Textarea value={data ? data.toString() : ""} disabled /> :
                   <Textarea onChange={this.onChange} placeholder={this.props.hint} inputRef={node => { this.text = node }} />
               }
             </div>

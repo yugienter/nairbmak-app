@@ -1,3 +1,6 @@
+import config from 'configs';
+var bs58 = require('bs58');
+
 class Util {
 
   static isIn(e, a) {
@@ -9,7 +12,27 @@ class Util {
     }
     return false;
   }
-  
+
+  static string2Array(s) {
+    if (!s) return [];
+    return s.split(',').map(function (item) {
+      return item.trim();
+    });
+  }
+
+  static decodeIPFSHash(hash) {
+    if (!hash || typeof hash !== 'string') return null;
+    if (hash.length === 66) return hash;
+    if (hash.length === 64) return '0x' + hash;
+    try {
+      let bytes = bs58.decode(hash);
+      let string = bytes.toString('hex');
+      return '0x' + string.replace('1220', '');
+    } catch (er) {
+      return null;
+    }
+  }
+
   static code2Name(code) {
     if (!code) return null;
     code = code.toString();
@@ -36,7 +59,7 @@ class Util {
   /**
    * Get link https://rinkeby.etherscan.io/tx/<txId>
    */
-  static etherScan(netId, tx) {
+  static linkTxEtherscan(netId, tx) {
     netId = netId.toString();
     var network = '';
     switch (netId) {
@@ -59,9 +82,9 @@ class Util {
   }
 
   /**
-   * Get link https://etherscan.io/token/generic-tokenholders2?a=<contract_address>&s=<total_supply>&p=<page>
+   * Get link https://rinkeby.etherscan.io/block/<blockHeight>
    */
-  static holderAPI(netId, address, totalSupply, page) {
+  static linkBlockEtherscan(netId, block) {
     netId = netId.toString();
     var network = '';
     switch (netId) {
@@ -80,7 +103,32 @@ class Util {
       default:
         network = '';
     }
-    return 'https://' + network + 'etherscan.io/token/generic-tokenholders2?a=' + address + '&s=' + totalSupply + '&p=' + page;
+    return 'https://' + network + 'etherscan.io/block/' + block;
+  }
+
+  /**
+   * Get link https://rinkeby.etherscan.io/address/<address>
+   */
+  static linkAddressEtherscan(netId, address) {
+    netId = netId.toString();
+    var network = '';
+    switch (netId) {
+      case '1':
+        network = '';
+        break;
+      case '3':
+        network = 'ropsten.';
+        break;
+      case '4':
+        network = 'rinkeby.';
+        break;
+      case '42':
+        network = 'kovan.';
+        break;
+      default:
+        network = '';
+    }
+    return 'https://' + network + 'etherscan.io/address/' + address;
   }
 }
 

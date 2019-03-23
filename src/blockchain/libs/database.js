@@ -45,10 +45,10 @@ class Database {
    * Score report
    * return txId
    */
-  scoreReport(reporter, index, completeness, importance) {
+  scoreReport(hashRoot, completeness, importance) {
     var self = this;
     return new Promise((resolve, reject) => {
-      self.DATABASE.INSTANCE.scoreReport(reporter, index, completeness, importance, { from: self.web3.eth.coinbase }, (er, txId) => {
+      self.DATABASE.INSTANCE.scoreReport(hashRoot, completeness, importance, { from: self.web3.eth.coinbase }, (er, txId) => {
         if (er) return reject(er);
         return resolve(txId);
       });
@@ -59,10 +59,10 @@ class Database {
    * Close report
    * return txId
    */
-  closeReport(index) {
+  closeReport(hashRoot) {
     var self = this;
     return new Promise((resolve, reject) => {
-      self.DATABASE.INSTANCE.closeReport(index, { from: self.web3.eth.coinbase }, (er, txId) => {
+      self.DATABASE.INSTANCE.closeReport(hashRoot, { from: self.web3.eth.coinbase }, (er, txId) => {
         if (er) return reject(er);
         return resolve(txId);
       });
@@ -70,13 +70,13 @@ class Database {
   }
 
   /**
-   * Get basic report info
+   * Get explorer
    * return result
    */
-  getBasicReportInfo(reporter, index) {
+  getExplorer(index) {
     var self = this;
     return new Promise((resolve, reject) => {
-      self.DATABASE.INSTANCE.getBasicReportInfo(reporter, index, (er, re) => {
+      self.DATABASE.INSTANCE.getExplorer(index, (er, re) => {
         if (er) return reject(er);
         return resolve(re);
       });
@@ -84,13 +84,13 @@ class Database {
   }
 
   /**
-   * Get report reviewer
+   * Get report
    * return result
    */
-  getReportReviewer(reporter, index, order) {
+  getReport(hashRoot) {
     var self = this;
     return new Promise((resolve, reject) => {
-      self.DATABASE.INSTANCE.getReportReviewer(reporter, index, order, (er, re) => {
+      self.DATABASE.INSTANCE.getReport(hashRoot, (er, re) => {
         if (er) return reject(er);
         return resolve(re);
       });

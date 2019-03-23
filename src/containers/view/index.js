@@ -3,11 +3,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { getIPFS } from 'modules/ipfs.reducer';
+import { scoreReport } from 'modules/database.reducer';
 
+import Action from './action';
 import ComponentOne from './componentOne';
 import ComponentTwo from './componentTwo';
 import ComponentThree from './componentThree';
 import ComponentFour from './componentFour';
+import ComponentFive from './componentFive';
 
 
 class View extends Component {
@@ -48,7 +51,7 @@ class View extends Component {
         <p className="error-msg-plain italic">{this.state.error}</p>
       </div>
     </div>
-    return null
+    return null;
   }
 
   show() {
@@ -75,6 +78,11 @@ class View extends Component {
           <h1 className="col-12">IV. THÔNG TIN VỀ NGƯỜI / ĐƠN VỊ GỬI BÁO CÁO</h1>
         </div>
         <ComponentFour data={this.state.data} />
+
+        <div className="row">
+          <h1 className="col-12">V. THÔNG TIN VỀ NGƯỜI / ĐƠN VỊ ĐÁNH GIÁ</h1>
+        </div>
+        <ComponentFive data={this.state.data} />
       </div>
     )
   }
@@ -85,16 +93,16 @@ class View extends Component {
         <div className="container">
 
           <div className="row">
-            <div className="col-6">
+            <div className="col-12">
               <div className="box">
                 <div className="row">
                   <div className="col">
-                    <p>Tìm tài liệu</p>
+                    <p>Tìm báo cáo</p>
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-9">
-                    <input type="text" placeholder="Mã tài liệu" onChange={this.onChange} value={this.state.hash} />
+                    <input type="text" placeholder="Mã báo cáo" onChange={this.onChange} value={this.state.hash} />
                   </div>
                   <div className="col-3">
                     <button className="my-btn primary no-margin" onClick={this.find}>Đọc</button>
@@ -103,27 +111,8 @@ class View extends Component {
                 {this.error()}
               </div>
             </div>
-            <div className="col-6">
-              <div className="box">
-                <div className="row">
-                  <div className="col">
-                    <p>Hoạt động với tài liệu</p>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-4">
-                    <button className="my-btn secondary no-margin">Mua</button>
-                  </div>
-                  <div className="col-4">
-                    <button className="my-btn primary no-margin">Nhận xét</button>
-                  </div>
-                  <div className="col-4">
-                    <button className="my-btn primary no-margin">Đóng</button>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
+          <Action hash={this.state.hash} />
 
           {this.show()}
 
@@ -135,11 +124,13 @@ class View extends Component {
 
 const mapStateToProps = state => ({
   routing: state.routing,
-  ipfs: state.ipfs
+  ipfs: state.ipfs,
+  database: state.database
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getIPFS: (hash) => getIPFS(hash)
+  getIPFS: (hash) => getIPFS(hash),
+  scoreReport: (hash, completeness, importance) => scoreReport(hash, completeness, importance)
 }, dispatch);
 
 export default connect(

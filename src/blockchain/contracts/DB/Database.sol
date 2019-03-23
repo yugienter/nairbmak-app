@@ -7,7 +7,7 @@ contract Database is STAKE {
   using SafeMath for uint256;
 
   struct MedicalReport {
-    bytes32 hashRoot;
+    uint256 blockNumber;
     uint256 timestamp;
     uint256 weight;
     address owner;
@@ -16,10 +16,12 @@ contract Database is STAKE {
     bool isClosed;
   }
 
-  mapping (address => MedicalReport[]) achievements;
-  event SubmitReport(address indexed reporter, uint256 index, bytes32 hashRoot);
-  event ScoreReport(address indexed reviewer, address reporter, uint256 index, uint256 completeness, uint256 importance);
-  event CloseReport(address indexed reporter, uint256 index, uint256 reward);
+  mapping (bytes32 => MedicalReport) store; // hashRoot => MedicalReport
+  mapping (address => bytes32[]) achievements; // owner => hashRoot
+  bytes32[] explorer;
+  event SubmitReport(address indexed reporter, bytes32 hashRoot);
+  event ScoreReport(address indexed reviewer, bytes32 _hashRoot, uint256 completeness, uint256 importance);
+  event CloseReport(address indexed reporter, bytes32 _hashRoot, uint256 reward);
 
   /**
    * Constructor
@@ -31,12 +33,14 @@ contract Database is STAKE {
   /**
    * Modifiers
    */
-  modifier onlyOwner(MedicalReport memory _mr) {
+  modifier onlyOwner(bytes32 _hashRoot) {
+    MedicalReport memory _mr = store[_hashRoot];
     require(_mr.owner == msg.sender, "Invalid authentication");
     _;
   }
 
-  modifier onlyReviewer(MedicalReport memory _mr) {
+  modifier onlyReviewer(bytes32 _hashRoot) {
+    MedicalReport memory _mr = store[_hashRoot];
     require(indexOf(msg.sender, _mr.reviewers) != _mr.reviewers.length, "Invalid authentication");
     require(indexOf(msg.sender, _mr.reviewed) == _mr.reviewed.length, "Invalid authentication");
     _;
@@ -52,12 +56,14 @@ contract Database is STAKE {
     _;
   }
 
-  modifier isOpened(MedicalReport memory _mr) {
+  modifier isOpened(bytes32 _hashRoot) {
+    MedicalReport memory _mr = store[_hashRoot];
     require(!_mr.isClosed);
     _;
   }
 
-  modifier isClosed(MedicalReport memory _mr) {
+  modifier isClosed(bytes32 _hashRoot) {
+    MedicalReport memory _mr = store[_hashRoot];
     require(_mr.isClosed);
     _;
   }
@@ -66,68 +72,73 @@ contract Database is STAKE {
    * Public functions
    */
   function submitReport(bytes32 _hashRoot, address[] memory _reviewers) public {
-    MedicalReport memory _mr = MedicalReport(_hashRoot, block.timestamp, 0, msg.sender, _reviewers, new address[](0), false);
-    achievements[msg.sender].push(_mr);
-    emit SubmitReport(msg.sender, achievements[msg.sender].length.sub(1), _hashRoot);
+    MedicalReport memory _mr = MedicalReport(block.number, block.timestamp, 0, msg.sender, _reviewers, new address[](0), false);
+    store[_hashRoot] = _mr;
+    achievements[msg.sender].push(_hashRoot);
+    explorer.push(_hashRoot);
+    emit SubmitReport(msg.sender, _hashRoot);
   }
 
   /**
    * Weight is calculated by mean
    */
   function scoreReport(
-    address _reporter,
-    uint256 _index,
+    bytes32 _hashRoot,
     uint256 _completeness,
     uint256 _importance
   )
     public
     validCompleteness(_completeness)
     validImportance(_importance)
-    onlyReviewer(achievements[_reporter][_index])
-    isOpened(achievements[_reporter][_index])
+    onlyReviewer(_hashRoot)
+    isOpened(_hashRoot)
   {
-    achievements[_reporter][_index].reviewed.push(msg.sender);
-    uint256 weight = achievements[_reporter][_index].weight;
-    uint256 harmony = achievements[_reporter][_index].reviewed.length;
+    store[_hashRoot].reviewed.push(msg.sender);
+    uint256 weight = store[_hashRoot].weight;
+    uint256 harmony = store[_hashRoot].reviewed.length;
     uint256 point = stakeOf(msg.sender).mul(_completeness.add(_importance)).div(100);
     if(harmony > 1) {
-      achievements[_reporter][_index].weight = weight.mul(harmony.sub(1)).add(point).div(harmony);
+      store[_hashRoot].weight = weight.mul(harmony.sub(1)).add(point).div(harmony);
     } else {
-      achievements[_reporter][_index].weight = point;
+      store[_hashRoot].weight = point;
     }
-    emit ScoreReport(msg.sender, _reporter, _index, _completeness, _importance);
+    emit ScoreReport(msg.sender, _hashRoot, _completeness, _importance);
   }
 
-  /*
+ /**
   * Reward is for reporter
   * Incentive is for reviewers
   * Reward is 10% of Weight
   * Incentive is 25% of Reward
   */
-  function closeReport(uint256 _index)
+  function closeReport(bytes32 _hashRoot)
     public
-    onlyOwner(achievements[msg.sender][_index])
-    isOpened(achievements[msg.sender][_index])
+    onlyOwner(_hashRoot)
+    isOpened(_hashRoot)
   {
-    achievements[msg.sender][_index].isClosed = true;
-    uint256 reward = achievements[msg.sender][_index].weight.mul(10).div(100);
-    uint256 incentive = reward.div(4).div(achievements[msg.sender][_index].reviewed.length);
+    store[_hashRoot].isClosed = true;
+    uint256 reward = store[_hashRoot].weight.mul(10).div(100);
+    uint256 incentive = reward.div(4).div(store[_hashRoot].reviewed.length);
     mint(msg.sender, reward);
-    for(uint256 i = 0; i < achievements[msg.sender][_index].reviewed.length; i++) {
-      mint(achievements[msg.sender][_index].reviewed[i], incentive.div(achievements[msg.sender][_index].reviewed.length));
+    for(uint256 i = 0; i < store[_hashRoot].reviewed.length; i++) {
+      mint(store[_hashRoot].reviewed[i], incentive.div(store[_hashRoot].reviewed.length));
     }
-    emit CloseReport(msg.sender, _index, reward);
+    emit CloseReport(msg.sender, _hashRoot, reward);
   }
 
-  function getBasicReportInfo(address _reporter, uint256 _index) public view returns (bytes32, uint256, uint256, address, bool) {
-    MedicalReport memory _mr = achievements[_reporter][_index];
-    return (_mr.hashRoot, _mr.timestamp, _mr.weight, _mr.owner, _mr.isClosed);
+  function getExplorer(uint256 _index) public view returns (bytes32) {
+    uint256 index = explorer.length - _index;
+    return explorer[index];
   }
 
-  function getReportReviewer(address _reporter, uint256 _index, uint256 _order) public view returns (address, bool) {
-    MedicalReport memory _mr = achievements[_reporter][_index];
-    bool isReviewed = indexOf(_mr.reviewers[_order], _mr.reviewed) != _mr.reviewed.length;
-    return (_mr.reviewers[_order], isReviewed);
+  function getReport(bytes32 _hashRoot) public view returns (uint256, uint256, uint256, address, bool) {
+    return (
+      store[_hashRoot].blockNumber,
+      store[_hashRoot].timestamp,
+      store[_hashRoot].weight,
+      store[_hashRoot].owner,
+      store[_hashRoot].isClosed
+    );
   }
 
   /**

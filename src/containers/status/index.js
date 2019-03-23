@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Clipboard from 'clipboard';
 import Wallet from '@kambria/kambria-wallet';
 import config from 'configs';
 import Util from 'helpers/util.lib';
@@ -11,6 +12,8 @@ import { fetchStakeInfo } from '../../modules/stake.reducer';
 class Status extends Component {
   constructor() {
     super();
+
+    new Clipboard('.copy');
 
     this.state = {
       register: false,
@@ -51,7 +54,7 @@ class Status extends Component {
         <span className="italic">{Util.code2Name(this.props.work.NETWORK)} </span>
         <span>- </span>
         <span className="bold">Address: </span>
-        <a className="underline">{this.props.work.ACCOUNT} </a>
+        <a className="underline copy" data-clipboard-text={this.props.work.ACCOUNT}>{this.props.work.ACCOUNT} </a>
         <span>- </span>
         <span className="bold">WORK: </span>
         <span>{this.props.work.WORK} / </span>
