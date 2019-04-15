@@ -53,12 +53,14 @@ class Report extends Component {
           errorMsg: null
         });
       }).catch(er => {
+        console.error(er);
         this.setState({
           successMsg: null,
           errorMsg: 'Cannot submit document.'
         });
       });
     }).catch(er => {
+      console.error(er);
       this.setState({
         successMsg: null,
         errorMsg: 'Cannot submit document.'
@@ -67,12 +69,11 @@ class Report extends Component {
   }
 
   message() {
-    if (this.state.errorMsg) return <p className="error-msg italic">{this.state.errorMsg}</p>
-    if (this.state.successMsg) return <p className="success-msg italic">
-      Success!<br />
+    if (this.state.errorMsg) return (<p className="error-msg italic">{this.state.errorMsg}</p>);
+    if (this.state.successMsg) return (<p className="success-msg italic">Success!<br />
       {!this.state.successMsg ? null : <a href="javascript:void(0)" onClick={() => { this.linkReportToView(this.state.successMsg) }}>Review the report: {this.state.successMsg}</a>}<br />
       {!this.state.txId ? null : <a href={Util.linkTxEtherscan(this.props.work.NETWORK, this.state.txId)} target="_blank" rel="noopener noreferrer">View on Etherscan: {this.state.txId}</a>}
-    </p>
+    </p>);
     return null;
   }
 

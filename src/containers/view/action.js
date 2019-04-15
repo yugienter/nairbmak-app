@@ -96,7 +96,6 @@ class Action extends Component {
     this.props.getReport(Util.decodeIPFSHash(hash)).then(re => {
       let to = re[3];
       let amount = "100000000000000000000"; // 100 WORK as default
-      console.log(re)
       this.props.transferWORK(to, amount).then(txId => {
         this.setState({
           txId: txId,

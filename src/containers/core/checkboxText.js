@@ -39,34 +39,23 @@ class CheckboxText extends Component {
     if (this.props.data) var data = this.props.data[this.props.name];
 
     this.checkboxRefs = [];
-    var re = [];
-    for (let i = 0; i < options.length; i++) {
+    var re = options.map((item, index) => {
       var random = Math.floor(Math.random() * 1000000000);
 
-      var element = null;
       if (this.props.viewOnly) {
-        if (Util.isIn(options[i], data)) {
-          element = <li key={i}>
-            <input type="checkbox" id={"checkbox-options-" + random} value={options[i]} checked disabled />
-            <label htmlFor={"checkbox-options-" + random}>{options[i]}</label>
-          </li>
-        }
-        else {
-          element = <li key={i}>
-            <input type="checkbox" id={"checkbox-options-" + random} value={options[i]} disabled />
-            <label htmlFor={"checkbox-options-" + random}>{options[i]}</label>
-          </li>
-        }
+        return <li key={index}>
+          <input type="checkbox" id={"checkbox-options-" + random} value={item} checked={Util.isIn(item, data)} disabled />
+          <label htmlFor={"checkbox-options-" + random}>{item}</label>
+        </li>
       } else {
-        element = <li key={i}>
-          <input type="checkbox" id={"checkbox-options-" + random} value={options[i]} onChange={this.onChange} ref={node => { if (node) this.checkboxRefs.push(node) }} />
-          <label htmlFor={"checkbox-options-" + random}>{options[i]}</label>
+        return <li key={index}>
+          <input type="checkbox" id={"checkbox-options-" + random} value={item} onChange={this.onChange} ref={node => { node && this.checkboxRefs.push(node) }} />
+          <label htmlFor={"checkbox-options-" + random}>{item}</label>
         </li>
       }
-      re.push(element)
-    }
+    });
 
-    return <ul className="my-checkbox">{re}</ul>;
+    return <ul className="my-checkbox">{re}</ul>
   }
 
   more() {

@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 
 
 class BoxOption extends Component {
-  
+
   select(data) {
     if (!data || data.length <= 0) return null;
 
-    var re = [];
-    for (let i = 0; i < data.length; i++) {
-      re.push(<option value={data[i]} key={i}>{data[i]}</option>)
-    }
+    var re = data.map((item, index) => {
+      return <option value={item} key={index}>{item}</option>
+    });
 
     return (<div className="col">
       <select name="option">
