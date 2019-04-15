@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Clipboard from 'clipboard';
-import Wallet from '@kambria/kambria-wallet';
+import Wallet from 'capsule-wallet';
 import config from 'configs';
 import Util from 'helpers/util.lib';
 

@@ -95,7 +95,7 @@ class View extends Component {
 
   render() {
     return (
-      <div className="wrapper">
+      <div className="wrapper animated fadeInUp">
         <div className="container">
 
           <div className="row">

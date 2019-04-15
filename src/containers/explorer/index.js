@@ -71,38 +71,32 @@ class Explorer extends Component {
   }
 
   show(data) {
-    let re = [];
-
-    for (let i = 0; i < data.length; i++) {
-      let element = <div key={i} className="row">
+    return data.map((item, index) => {
+      return <div key={index} className="row animated slideInLeft">
         <div className="box">
           <div className="row">
             <div className="col-1">
-              <a href={Util.linkBlockEtherscan(this.props.work.NETWORK, Number(data[i][0]))} target="_blank" rel="noopener noreferrer">{Number(data[i][0])}</a>
+              <a href={Util.linkBlockEtherscan(this.props.work.NETWORK, Number(item[0]))} target="_blank" rel="noopener noreferrer">{Number(item[0])}</a>
             </div>
             <div className="col-2">
-              <p className="lengthy">{Date(Number(data[i][1]) * 1000)}</p>
+              <p className="lengthy">{Date(Number(item[1]) * 1000)}</p>
             </div>
             <div className="col-3">
-              <a href={Util.linkAddressEtherscan(this.props.work.NETWORK, data[i][3])} target="_blank" rel="noopener noreferrer" className="lengthy">{data[i][3]}</a>
+              <a href={Util.linkAddressEtherscan(this.props.work.NETWORK, item[3])} target="_blank" rel="noopener noreferrer" className="lengthy">{item[3]}</a>
             </div>
             <div className="col-3">
-              <a onClick={() => { this.linkReportToView(data[i][5]) }} className="lengthy">{data[i][5]}</a>
+              <a onClick={() => { this.linkReportToView(item[5]) }} className="lengthy">{item[5]}</a>
             </div>
             <div className="col-2">
-              <p className="lengthy">{Number(data[i][2]) / 10 ** 18}</p>
+              <p className="lengthy">{Number(item[2]) / 10 ** 18}</p>
             </div>
             <div className="col-1">
-              <p>{data[i][4].toString()}</p>
+              <p>{item[4].toString()}</p>
             </div>
           </div>
         </div>
       </div>
-
-      re.push(element);
-    }
-
-    return re;
+    });
   }
 
   componentDidMount() {
@@ -111,7 +105,7 @@ class Explorer extends Component {
 
   render() {
     return (
-      <div className="wrapper">
+      <div className="wrapper animated fadeInUp">
         <div className="container">
 
           <div className="row">

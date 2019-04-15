@@ -88,7 +88,7 @@ class Report extends Component {
   render() {
     return (
       !this.state.reset ? null : // Tricky reset components
-        <div className="wrapper">
+        <div className="wrapper animated fadeInUp">
           <div className="container">
 
             <div className="row">

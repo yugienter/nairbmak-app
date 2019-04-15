@@ -97,7 +97,7 @@ ul.my-checkbox li input[type="checkbox"]:checked + label::before {
 }
 
 ul.my-checkbox li input[type="checkbox"]:checked + label {
-  border: 2px solid $c-tail;
+  border: 2px solid $c-primary;
   background-color: $c-primary;
   color: $c-white;
   transition: all 0.2s;
