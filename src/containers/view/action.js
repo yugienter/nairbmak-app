@@ -38,7 +38,7 @@ class Action extends Component {
     if (this.state.txId) return <div className="row">
       <div className="col-12">
         <p className="success-msg-plain italic">Success!</p>
-        <a href={Util.linkTxEtherscan(this.props.work.NETWORK, this.state.txId)} target="_blank" rel="noopener noreferrer">View on Etherscan: {this.state.txId}</a>
+        <a href={Util.linkTxScan(this.props.work.NETWORK, this.state.txId)} target="_blank" rel="noopener noreferrer">View on Scan: {this.state.txId}</a>
       </div>
     </div>
     return null;

@@ -20,7 +20,7 @@ export const FETCH_STAKE_FAIL = 'FETCH_STAKE_FAIL';
 
 function _fetchInfo(callback) {
   try {
-    var web3 = window.capsuleWallet.provider.web3;
+    var web3 = window.capsuleWalletTomo.provider.web3;
   }
   catch (er) {
     if (er) return callback(er, null);

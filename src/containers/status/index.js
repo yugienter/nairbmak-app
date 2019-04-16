@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Clipboard from 'clipboard';
-import Wallet from 'capsule-wallet';
+import Wallet from 'capsule-wallet-tomo';
 import config from 'configs';
 import Util from 'helpers/util.lib';
 
@@ -89,7 +89,7 @@ class Status extends Component {
       </div>
       {
         !this.state.txId ? null : <div className="status-bar info">
-          <a href={Util.linkTxEtherscan(this.props.work.NETWORK, this.state.txId)} target="_blank" rel="noopener noreferrer">View on Etherscan: {this.state.txId}</a>
+          <a href={Util.linkTxScan(this.props.work.NETWORK, this.state.txId)} target="_blank" rel="noopener noreferrer">View on Scan: {this.state.txId}</a>
         </div>
       }
     </div>

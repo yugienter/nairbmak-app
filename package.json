@@ -2,7 +2,7 @@
   "name": "nairbmak-app",
   "version": "0.0.1",
   "scripts": {
-    "start": "REACT_APP_ENV=development PORT=5000 react-scripts start",
+    "start": "REACT_APP_ENV=development PORT=5000 react-scripts --max_old_space_size=4096 start",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "css": "nodemon --exec 'sass ./src/statics/styles/index.scss ./src/statics/styles/index.css --style compressed'"
@@ -11,7 +11,7 @@
     "async": "^2.6.2",
     "axios": "^0.18.0",
     "bs58": "^4.0.1",
-    "capsule-wallet": "^1.0.4",
+    "capsule-wallet-tomo": "^1.0.1",
     "clipboard": "^2.0.4",
     "history": "^4.7.2",
     "react": "^16.4.2",

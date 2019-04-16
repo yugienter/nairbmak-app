@@ -20,7 +20,7 @@ export const FETCH_WORK_FAIL = 'FETCH_WORK_FAIL';
 
 function _fetchInfo(callback) {
   try {
-    var web3 = window.capsuleWallet.provider.web3;
+    var web3 = window.capsuleWalletTomo.provider.web3;
   }
   catch (er) {
     if (er) return callback(er, null);
@@ -71,7 +71,7 @@ export const TRANSFER_WORK_FAIL = 'TRANSFER_WORK_FAIL';
 
 function _transferWORK(to, amount, callback) {
   try {
-    var web3 = window.capsuleWallet.provider.web3;
+    var web3 = window.capsuleWalletTomo.provider.web3;
   }
   catch (er) {
     if (er) return callback(er, null);

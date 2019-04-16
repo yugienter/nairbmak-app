@@ -19,7 +19,7 @@ export const SUBMIT_REPORT_FAIL = 'SUBMIT_REPORT_FAIL';
 
 function _submitReport(hash, reviewers, callback) {
   try {
-    var web3 = window.capsuleWallet.provider.web3;
+    var web3 = window.capsuleWalletTomo.provider.web3;
   }
   catch (er) {
     if (er) return callback(er, null);
@@ -57,7 +57,7 @@ export const SCORE_REPORT_FAIL = 'SCORE_REPORT_FAIL';
 
 function _scoreReport(hash, completeness, importance, callback) {
   try {
-    var web3 = window.capsuleWallet.provider.web3;
+    var web3 = window.capsuleWalletTomo.provider.web3;
   }
   catch (er) {
     if (er) return callback(er, null);
@@ -95,7 +95,7 @@ export const CLOSE_REPORT_FAIL = 'CLOSE_REPORT_FAIL';
 
 function _closeReport(hash, callback) {
   try {
-    var web3 = window.capsuleWallet.provider.web3;
+    var web3 = window.capsuleWalletTomo.provider.web3;
   }
   catch (er) {
     if (er) return callback(er, null);
@@ -133,7 +133,7 @@ export const GET_REPORT_FAIL = 'GET_REPORT_FAIL';
 
 function _getReport(hash, callback) {
   try {
-    var web3 = window.capsuleWallet.provider.web3;
+    var web3 = window.capsuleWalletTomo.provider.web3;
   }
   catch (er) {
     if (er) return callback(er, null);
@@ -171,7 +171,7 @@ export const GET_EXPLORER_FAIL = 'GET_EXPLORER_FAIL';
 
 function _getExplorer(index, callback) {
   try {
-    var web3 = window.capsuleWallet.provider.web3;
+    var web3 = window.capsuleWalletTomo.provider.web3;
   }
   catch (er) {
     if (er) return callback(er, null);

@@ -37,97 +37,73 @@ class Util {
     code = code.toString();
     var network = '';
     switch (code) {
-      case '1':
+      case '88':
         network = 'Mainnet';
         break;
-      case '3':
-        network = 'Ropsten';
-        break;
-      case '4':
-        network = 'Rinkeby';
-        break;
-      case '42':
-        network = 'Kovan';
+      case '89':
+        network = 'Testnet';
         break;
       default:
-        network = 'Mainnet';
+        network = 'Testnet';
     }
     return network;
   }
 
   /**
-   * Get link https://rinkeby.etherscan.io/tx/<txId>
+   * Get link https://scan.testnet.tomochain.com/txs/<txId>
    */
-  static linkTxEtherscan(netId, tx) {
+  static linkTxScan(netId, tx) {
     netId = netId.toString();
     var network = '';
     switch (netId) {
-      case '1':
+      case '88':
         network = '';
         break;
-      case '3':
-        network = 'ropsten.';
-        break;
-      case '4':
-        network = 'rinkeby.';
-        break;
-      case '42':
-        network = 'kovan.';
+      case '89':
+        network = 'testnet.';
         break;
       default:
         network = '';
     }
-    return 'https://' + network + 'etherscan.io/tx/' + tx;
+    return `https://scan.${network}com/txs/${tx}`;
   }
 
   /**
-   * Get link https://rinkeby.etherscan.io/block/<blockHeight>
+   * Get link https://scan.testnet.tomochain.com/blocks/<blockHeight>
    */
-  static linkBlockEtherscan(netId, block) {
+  static linkBlockScan(netId, block) {
     netId = netId.toString();
     var network = '';
     switch (netId) {
-      case '1':
+      case '88':
         network = '';
         break;
-      case '3':
-        network = 'ropsten.';
-        break;
-      case '4':
-        network = 'rinkeby.';
-        break;
-      case '42':
-        network = 'kovan.';
+      case '89':
+        network = 'testnet.';
         break;
       default:
         network = '';
     }
-    return 'https://' + network + 'etherscan.io/block/' + block;
+    return `https://scan.${network}com/blocks/${block}`;
   }
 
   /**
-   * Get link https://rinkeby.etherscan.io/address/<address>
+   * Get link https://scan.testnet.tomochain.com/address/<address>
    */
-  static linkAddressEtherscan(netId, address) {
+  static linkAddressScan(netId, address) {
     netId = netId.toString();
     var network = '';
     switch (netId) {
-      case '1':
+      case '88':
         network = '';
         break;
-      case '3':
-        network = 'ropsten.';
-        break;
-      case '4':
-        network = 'rinkeby.';
-        break;
-      case '42':
-        network = 'kovan.';
+      case '89':
+        network = 'testnet.';
         break;
       default:
         network = '';
     }
-    return 'https://' + network + 'etherscan.io/address/' + address;
+    return `https://scan.${network}com/address/${address}`;
   }
 }
 

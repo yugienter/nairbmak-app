@@ -76,13 +76,13 @@ class Explorer extends Component {
         <div className="box">
           <div className="row">
             <div className="col-1">
-              <a href={Util.linkBlockEtherscan(this.props.work.NETWORK, Number(item[0]))} target="_blank" rel="noopener noreferrer">{Number(item[0])}</a>
+              <a href={Util.linkBlockScan(this.props.work.NETWORK, Number(item[0]))} target="_blank" rel="noopener noreferrer">{Number(item[0])}</a>
             </div>
             <div className="col-2">
               <p className="lengthy">{Date(Number(item[1]) * 1000)}</p>
             </div>
             <div className="col-3">
-              <a href={Util.linkAddressEtherscan(this.props.work.NETWORK, item[3])} target="_blank" rel="noopener noreferrer" className="lengthy">{item[3]}</a>
+              <a href={Util.linkAddressScan(this.props.work.NETWORK, item[3])} target="_blank" rel="noopener noreferrer" className="lengthy">{item[3]}</a>
             </div>
             <div className="col-3">
               <a onClick={() => { this.linkReportToView(item[5]) }} className="lengthy">{item[5]}</a>

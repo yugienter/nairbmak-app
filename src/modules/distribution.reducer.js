@@ -17,7 +17,7 @@ export const SHARE_FAIL = 'SHARE_FAIL';
 
 function _share(callback) {
   try {
-    var web3 = window.capsuleWallet.provider.web3;
+    var web3 = window.capsuleWalletTomo.provider.web3;
   }
   catch (er) {
     if (er) return callback(er, null);
