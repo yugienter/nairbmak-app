@@ -19,7 +19,12 @@ export const FETCH_WORK_OK = 'FETCH_WORK_OK';
 export const FETCH_WORK_FAIL = 'FETCH_WORK_FAIL';
 
 function _fetchInfo(callback) {
-  let web3 = window.kambriaWallet.web3;
+  try {
+    var web3 = window.capsuleWallet.provider.web3;
+  }
+  catch (er) {
+    if (er) return callback(er, null);
+  }
   let WORK = new work(config.eth.WORK.ADDRESS, web3);
   web3.eth.getAccounts((er, accounts) => {
     if (er) return callback(er, null);
@@ -65,7 +70,12 @@ export const TRANSFER_WORK_OK = 'TRANSFER_WORK_OK';
 export const TRANSFER_WORK_FAIL = 'TRANSFER_WORK_FAIL';
 
 function _transferWORK(to, amount, callback) {
-  let web3 = window.kambriaWallet.web3;
+  try {
+    var web3 = window.capsuleWallet.provider.web3;
+  }
+  catch (er) {
+    if (er) return callback(er, null);
+  }
   let WORK = new work(config.eth.WORK.ADDRESS, web3);
   WORK.transfer(to, amount).then(txId => {
     return callback(null, txId);

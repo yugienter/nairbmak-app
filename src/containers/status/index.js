@@ -40,10 +40,8 @@ class Status extends Component {
 
   callback(er, provider) {
     if (er) throw new Error(er);
-    window.kambriaWallet = { web3: provider.web3 };
     this.setState({ register: false, web3: provider.web3 }, () => {
-      this.props.fetchWorkInfo();
-      this.props.fetchStakeInfo();
+      this.props.fetchWorkInfo().then(this.props.fetchStakeInfo);
     });
   }
 
@@ -65,7 +63,7 @@ class Status extends Component {
       });
     }).catch(er => {
       console.error(er);
-    })
+    });
   }
 
   success() {

@@ -18,7 +18,12 @@ export const SUBMIT_REPORT_OK = 'SUBMIT_REPORT_OK';
 export const SUBMIT_REPORT_FAIL = 'SUBMIT_REPORT_FAIL';
 
 function _submitReport(hash, reviewers, callback) {
-  let web3 = window.kambriaWallet.web3;
+  try {
+    var web3 = window.capsuleWallet.provider.web3;
+  }
+  catch (er) {
+    if (er) return callback(er, null);
+  }
   let DATABASE = new database(config.eth.DATABASE.ADDRESS, web3);
   DATABASE.submitReport(hash, reviewers).then(txId => {
     return callback(null, txId);
@@ -51,7 +56,12 @@ export const SCORE_REPORT_OK = 'SCORE_REPORT_OK';
 export const SCORE_REPORT_FAIL = 'SCORE_REPORT_FAIL';
 
 function _scoreReport(hash, completeness, importance, callback) {
-  let web3 = window.kambriaWallet.web3;
+  try {
+    var web3 = window.capsuleWallet.provider.web3;
+  }
+  catch (er) {
+    if (er) return callback(er, null);
+  }
   let DATABASE = new database(config.eth.DATABASE.ADDRESS, web3);
   DATABASE.scoreReport(hash, completeness, importance).then(txId => {
     return callback(null, txId);
@@ -84,7 +94,12 @@ export const CLOSE_REPORT_OK = 'CLOSE_REPORT_OK';
 export const CLOSE_REPORT_FAIL = 'CLOSE_REPORT_FAIL';
 
 function _closeReport(hash, callback) {
-  let web3 = window.kambriaWallet.web3;
+  try {
+    var web3 = window.capsuleWallet.provider.web3;
+  }
+  catch (er) {
+    if (er) return callback(er, null);
+  }
   let DATABASE = new database(config.eth.DATABASE.ADDRESS, web3);
   DATABASE.closeReport(hash).then(txId => {
     return callback(null, txId);
@@ -117,7 +132,12 @@ export const GET_REPORT_OK = 'GET_REPORT_OK';
 export const GET_REPORT_FAIL = 'GET_REPORT_FAIL';
 
 function _getReport(hash, callback) {
-  let web3 = window.kambriaWallet.web3;
+  try {
+    var web3 = window.capsuleWallet.provider.web3;
+  }
+  catch (er) {
+    if (er) return callback(er, null);
+  }
   let DATABASE = new database(config.eth.DATABASE.ADDRESS, web3);
   DATABASE.getReport(hash).then(report => {
     return callback(null, report);
@@ -150,7 +170,12 @@ export const GET_EXPLORER_OK = 'GET_EXPLORER_OK';
 export const GET_EXPLORER_FAIL = 'GET_EXPLORER_FAIL';
 
 function _getExplorer(index, callback) {
-  let web3 = window.kambriaWallet.web3;
+  try {
+    var web3 = window.capsuleWallet.provider.web3;
+  }
+  catch (er) {
+    if (er) return callback(er, null);
+  }
   let DATABASE = new database(config.eth.DATABASE.ADDRESS, web3);
   DATABASE.getExplorer(index).then(report => {
     return callback(null, report);

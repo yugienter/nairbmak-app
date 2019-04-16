@@ -19,7 +19,12 @@ export const FETCH_STAKE_OK = 'FETCH_STAKE_OK';
 export const FETCH_STAKE_FAIL = 'FETCH_STAKE_FAIL';
 
 function _fetchInfo(callback) {
-  let web3 = window.kambriaWallet.web3;
+  try {
+    var web3 = window.capsuleWallet.provider.web3;
+  }
+  catch (er) {
+    if (er) return callback(er, null);
+  }
   let STAKE = new stake(config.eth.DATABASE.ADDRESS, web3);
   web3.eth.getAccounts((er, accounts) => {
     if (er) return callback(er, null);
