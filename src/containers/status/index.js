@@ -39,7 +39,7 @@ class Status extends Component {
   }
 
   callback(er, provider) {
-    if (er) throw new Error(er);
+    if (er) return console.error(er);
     this.setState({ register: false, web3: provider.web3 }, () => {
       this.props.fetchWorkInfo().then(this.props.fetchStakeInfo);
     });
