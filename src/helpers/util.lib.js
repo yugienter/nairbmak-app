@@ -65,7 +65,7 @@ class Util {
       default:
         network = '';
     }
-    return `https://scan.${network}com/txs/${tx}`;
+    return `https://scan.${network}tomochain.com/txs/${tx}`;
   }
 
   /**
@@ -84,7 +84,7 @@ class Util {
       default:
         network = '';
     }
-    return `https://scan.${network}com/blocks/${block}`;
+    return `https://scan.${network}tomochain.com/blocks/${block}`;
   }
 
   /**
@@ -103,7 +103,7 @@ class Util {
       default:
         network = '';
     }
-    return `https://scan.${network}com/address/${address}`;
+    return `https://scan.${network}tomochain.com/address/${address}`;
   }
 }
 

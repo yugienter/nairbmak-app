@@ -7,7 +7,7 @@ var config = {};
  * Development configurations
  */
 config.development = {
-  NETWORK: 4,
+  NETWORK: 89,
   WORK: {
     ADDRESS: '0x76c5b4def19c1262e120ca1195e7722cbd6c81e6'
   },
@@ -23,7 +23,7 @@ config.development = {
  * Production configurations
  */
 config.production = {
-  NETWORK: 4,
+  NETWORK: 89,
   WORK: {
     ADDRESS: '0x76c5b4def19c1262e120ca1195e7722cbd6c81e6'
   },
